@@ -125,6 +125,11 @@
     @apply font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-gray-400 via-gray-200 to-gray-600 pb-2 pr-2;
   }
 }
+@layer utilities{
+.gradient {
+  @apply bg-gradient-to-b from-gray-400 via-gray-200 to-gray-600;
+}
+}
 
 .grid-background {
   position: relative;
