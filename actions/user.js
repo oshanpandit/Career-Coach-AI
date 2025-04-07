@@ -33,7 +33,7 @@ export const updateUser = async (data) => {
                             industry: data.industry,
                             salaryRanges: [],
                             growthRate: 0,
-                            demandLevel: "MEDIUM",
+                            demandLevel: "NEUTRAL",
                             topSkills: [],
                             marketOutlook: "NEUTRAL",
                             keyTrends: [],
