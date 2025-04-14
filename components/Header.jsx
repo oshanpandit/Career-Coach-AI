@@ -30,7 +30,7 @@ const Header = async() => {
         <div className="flex items-center space-x-2 md:space-x-4">
           <SignedIn>
             <Link href="/dashboard">
-              <Button className="cursor-pointer">
+              <Button className="cursor-pointer" variant="outline">
                 <LayoutDashboard className="h-4 w-4" />
                 <span className="hidden md:block">Industry Insights</span>
               </Button>

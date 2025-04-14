@@ -2,6 +2,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { db } from "@/lib/prisma";
 import { checkUser } from "@/lib/checkUser";
+import { generateAIInsights } from "./dashboard";
 export const updateUser = async (data) => {
     const { userId } = await auth();
     if (!userId) {
@@ -28,19 +29,28 @@ export const updateUser = async (data) => {
                 });
 
                 if (!industryInsight) {
-                    industryInsight = await tx.IndustryInsight.create({
+                    const insights=await generateAIInsights(data.industry);
+                    // console.log(insights);
+                    industryInsight = await db.industryInsight.create({
                         data: {
                             industry: data.industry,
-                            salaryRanges: [],
-                            growthRate: 0,
-                            demandLevel: "NEUTRAL",
-                            topSkills: [],
-                            marketOutlook: "NEUTRAL",
-                            keyTrends: [],
-                            recommendedSkills: [],
+                            ...insights,
                             nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)  //1week from now
                         }
-                    })
+                    });
+                    // industryInsight = await tx.IndustryInsight.create({
+                    //     data: {
+                    //         industry: data.industry,
+                    //         salaryRanges: [],
+                    //         growthRate: 0,
+                    //         demandLevel: "MEDIUM",
+                    //         topSkills: [],
+                    //         marketOutlook: "NEUTRAL",
+                    //         keyTrends: [],
+                    //         recommendedSkills: [],
+                    //         nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)  //1week from now
+                    //     }
+                    // })
                 }
 
                 const updateUser = await tx.User.update({
@@ -54,7 +64,7 @@ export const updateUser = async (data) => {
                         skills: data.skills
                     }
                 })
-                console.log(updateUser,industryInsight);
+                // console.log(updateUser,industryInsight);
                 return { updateUser, industryInsight };
             },
             {
