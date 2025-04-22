@@ -22,6 +22,7 @@ import { useFetch } from "@/hooks/use-fetch";
 import { useUser } from "@clerk/nextjs";
 import { entriesToMarkdown } from "@/app/lib/helper";
 import { resumeSchema } from "@/app/lib/schema";
+import html2pdf from "html2pdf.js";
 
 
 export default function ResumeBuilder({ initialContent }) {
@@ -114,24 +115,16 @@ export default function ResumeBuilder({ initialContent }) {
 
   const generatePDF = async () => {
     setIsGenerating(true);
-    console.log(previewRef.current);
     try {
-      const html = previewRef.current?.innerHTML;
-      const res = await fetch('/api/generate-pdf', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ html }),
-      });
-
-      if (!res.ok) throw new Error('Failed to generate PDF');
-
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'resume.pdf';
-      a.click();
-      window.URL.revokeObjectURL(url);
+    var element = document.getElementById('resume-pdf');
+    var opt = {
+      margin:       1,
+      filename:     'resume.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().from(element).set(opt).save();
     } catch (err) {
       console.error('Error generating pdf', err);
     } finally {
