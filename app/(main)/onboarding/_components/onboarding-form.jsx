@@ -50,7 +50,7 @@ const OnboardingForm = ({ industries }) => {
   })
   const onSubmit = async(values) => {
     try {
-      console.log(values);
+      // console.log(values);
       const formattedIndustry=`${values.industry}-${values.subIndustry
         .toLowerCase()
         .replace(/ /g,"-")}`;

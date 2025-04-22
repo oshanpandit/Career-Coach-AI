@@ -46,7 +46,7 @@ const DashboardView = ({ insights }) => {
     { addSuffix: true }
   )
 
-  console.log(insights);
+  // console.log(insights);
   return (
     <div className='space-y-6'>
       <div>
