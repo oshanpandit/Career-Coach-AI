@@ -18,9 +18,6 @@ export async function generateQuiz() {
         where: {
             clerkUserId: userId
         },
-        include: {
-            industryInsight: true
-        }
     });
 
     if (!user) {
@@ -71,9 +68,6 @@ export async function saveQuizResult(questions, answers, score) {
         where: {
             clerkUserId: userId
         },
-        include: {
-            industryInsight: true
-        }
     });
 
     if (!user) {
@@ -146,9 +140,6 @@ export async function getAssessments(){
         where: {
             clerkUserId: userId
         },
-        include: {
-            industryInsight: true
-        }
     });
 
     if (!user) {
