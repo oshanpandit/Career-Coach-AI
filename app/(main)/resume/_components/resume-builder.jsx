@@ -114,6 +114,10 @@ export default function ResumeBuilder({ initialContent }) {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const generatePDF = async () => {
+    if(activeTab=="edit"){
+       toast.info("Please switch to markdown mode to download PDF");
+       return;
+    }
     setIsGenerating(true);
     try {
     var element = document.getElementById('resume-pdf');
